@@ -1,0 +1,34 @@
+{% extends "file_upload/base.html" %}
+
+{% block content %}
+    <h3>File list</h3>
+<p class="text-lowercase">
+    <a href="{% url 'file_upload:file_upload' %}">file_upload</a> <br/>
+    <a href="{% url 'file_upload:model_form_upload' %}">model_form_upload</a> <br/>
+    <a href="{% url 'file_upload:ajax_form_upload' %}">ajax_form_upload</a> <br/>
+    <a href="{% url 'file_upload:ajax_upload' %}">ajax_upload</a> <br/>
+    <a href="{% url 'file_upload:file_list' %}">file_list</a> <br/>
+
+</p>
+    {% if files %}
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Filename & URL</td>
+                    <td>FilesizeL</td>
+                    <td>Upload MethodL</td>
+                </tr>
+            {% for file in files %}
+                <tr>
+{#                    <td><a href="{% url 'file_download:file_download' file.file.url %}">{{ file.file.url }}</a></td>#}
+                    <td><a href="{{ file.file.url }}">{{ file.file.url }}</a></td>
+                    <td>{{ file.file.size|filesizeformat }}</td>
+                    <td>{{ file.upload_method }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+     {% else %}
+        <p>No file upload yet please click <a href="{% url 'file_upload:ajax_upload' %}">here</a>to upload files</p>
+    {% endif %}
+{% endblock content %}
