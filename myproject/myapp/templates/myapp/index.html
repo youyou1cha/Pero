@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>需要邀请码才可以访问页面</h3>
+{% if  messages %}
+    {% for message in messages %}
+        <li {% if message %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
+    {% endfor %}
+{% endif %}
+
+{% if form %}
+    <form action="{% url 'myapp:code_verify' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">提交</button>
+    </form>
+{% else %}
+    <p>会话过期</p>
+{% endif %}
+
+</body>
+</html>
